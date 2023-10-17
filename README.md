@@ -36,7 +36,7 @@ My chosen API for this project is **Marvel**.
 
 Here's a video / GIF that demos all of the app's implemented features:
 
-<img src='[http://i.imgur.com/link/to/your/gif/file.gif](https://i.imgur.com/w2bhAfp.gif)' title='Video Demo' width='' alt='Video Demo' />
+<img src='https://i.imgur.com/w2bhAfp.gif' title='Video Demo' width='' alt='Video Demo' />
 
 GIF created with **ScreenToGIF**
 

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.codepath.asynchttpclient.AsyncHttpClient
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
@@ -18,24 +19,27 @@ class MainActivity : AppCompatActivity() {
     val publicKey = "e32c8e1389e6a11e495b92a33e7060fd"
     val timestamp = System.currentTimeMillis()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val button = findViewById<Button>(R.id.marvelButton)
         val imageView = findViewById<ImageView>(R.id.marvelImage)
+        val nameView = findViewById<TextView>(R.id.name)
+        val modView = findViewById<TextView>(R.id.modified)
 
-        getNextImage(button, imageView)
+        getNextImage(button, imageView, nameView, modView)
     }
 
-    private fun getNextImage(button: Button, imageView: ImageView) {
+    private fun getNextImage(button: Button, imageView: ImageView, nameView: TextView, modView: TextView) {
         button.setOnClickListener {
-            val randomCharacterId = 1011334 //(19000..20000).random()
-            getMarvelImageURL(imageView, randomCharacterId)
+            val randomCharacterId = (1011334..1011344).random()
+            getMarvelImageURL(imageView, randomCharacterId, nameView, modView)
         }
     }
 
-    private fun getMarvelImageURL(imageView: ImageView, characterId: Int) {
+    private fun getMarvelImageURL(imageView: ImageView, characterId: Int, name: TextView, mod: TextView) {
         val characterUrl =
             "https://gateway.marvel.com/v1/public/characters/$characterId?ts=$timestamp&apikey=$publicKey&hash=${generateHash(timestamp)}"
 
@@ -56,6 +60,9 @@ class MainActivity : AppCompatActivity() {
                             val characterData = resultsArray.getJSONObject(0)
                             marvelImagePath = characterData.getJSONObject("thumbnail").getString("path")
                             imageExt = characterData.getJSONObject("thumbnail").getString("extension")
+
+                            name.text = characterData.getString("name")
+                            mod.text = characterData.getString("modified")
 
                             val imageUrl = "$marvelImagePath.$imageExt"
                             loadImage(imageUrl, imageView)
